@@ -1,6 +1,6 @@
 # !/usr/bin/env bash
 
-###### USAGE ######
+######## USAGE ########
 function _usage(){
 	echo "Usage: 
 	-c --create	- create a new ssh with given name
@@ -11,7 +11,7 @@ function _usage(){
 	"
 }
 
-## create ssh-key
+######## CREATE SSH - KEY ########
 function _create_ssh_key(){
 	echo "creating ssh ..."
 
@@ -21,7 +21,7 @@ function _create_ssh_key(){
 	ssh-keygen -q -t rsa -N '' -f $HOME/.ssh/$1 <<<y >/dev/null 2>&1
 }
 
-### copy ssh-key
+######## COPY SSH-KEY ID ########
 function _cp_ssh_key(){
 
 	echo "copying ssh keys.pub ..."
@@ -30,14 +30,8 @@ function _cp_ssh_key(){
 	read -ra hosts <<< "$2"
 	read -ra pass <<< "$3"
 
-	#echo "${#hosts[@]}, ${hosts[@]}"
-	#echo "${#pass[@]}, ${pass[@]}"
-	#echo "${#users[@]}, ${users[@]}"
-
 	## single user - multiple pass
 	if [[ ${#users[@]} -eq 1 && ${#pass[@]} -gt 1 && ${#pass[@]} -eq ${#hosts[@]} ]]; then
-		
-		echo "single user multiple pass"
 		
 		i=0
 		while [ $i -lt ${#hosts[@]} ]; do
@@ -48,7 +42,6 @@ function _cp_ssh_key(){
 	## single user/pass
 	elif [[ ${#users[@]} -eq 1 && ${#pass[@]} -eq 1 ]]; then
 		
-		echo "single user/pass"
 		for host in "${hosts[@]}"; do
 			sshpass -p ${pass[0]} ssh-copy-id -i /$HOME/.ssh/$4.pub -f -o StrictHostKeyChecking=no ${users[0]}@$host
 		done
@@ -57,7 +50,6 @@ function _cp_ssh_key(){
 	## multiple user/pass
 	elif [[ ${#users[@]} -gt 1 && ${#pass[@]} -gt 1 && ${#pass[@]} -eq ${#hosts[@]} ]]; then
 	
-		echo "mutliple user/pass"
 		i=0
 		while [ $i -lt ${#hosts[@]} ]; do
 		
@@ -65,10 +57,9 @@ function _cp_ssh_key(){
 			i=$(( $i + 1 ))	
 		done
 	
-	### single pass multiple users
+	## single pass multiple users
 	elif [[ ${#users[@]} -gt 1 && ${#pass[@]} -eq 1 && ${#users[@]} -eq ${#hosts[@]} ]]; then
 		
-		echo "single pass multiple users"
 		i=0
 		while [ $i -lt ${#hosts[@]} ]; do
 			sshpass -p ${pass[0]} ssh-copy-id -i /$HOME/.ssh/$4.pub -f -o StrictHostKeyChecking=no ${users[$i]}@${hosts[$i]}
@@ -82,7 +73,7 @@ function _cp_ssh_key(){
 	fi
 }
 
-#echo "my params -> $@"
+
 for param in "$@"; do
 	shift
 	case "$param" in
@@ -95,8 +86,6 @@ for param in "$@"; do
 
 	esac
 done
-
-#echo "my params -> $@"
 
 OPTIND=1
 while getopts ":c:h:u:i:p:" opt; do
@@ -126,10 +115,6 @@ while getopts ":c:h:u:i:p:" opt; do
 			;;
 	esac
 done
-
-#echo "ssh key filename ->	$key_name"
-#echo "ips ->			$ips"
-#echo "pass ->			$passwords"
 
 shift $((OPTIND - 1))
 
