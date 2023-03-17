@@ -24,7 +24,7 @@ Usage:
 $ ./ssh-copy-key.sh -c foo-bar-sshkey -p foo-pass,bar-pass,... --host foo,bar,... --user foo-user,bar-user,...
 ```
 
-```bash
+```console
 $ ./ssh-copy-key.sh -c foo-bar-sshkey -p foo-pass,bar-pass --host foo,bar --user foo-user,bar-user
 
 # output:
