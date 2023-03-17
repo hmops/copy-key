@@ -21,13 +21,14 @@ Usage:
 
 
 ```console
+$ ./ssh-copy-key.sh -c foo-bar-sshkey -p foo-pass,bar-pass,... --host foo,bar,... --user foo-user,bar-user,...
+```
 
-# ./ssh-copy-key.sh -c foo-bar-sshkey -p foo-pass,bar-pass,... --host foo,bar,... --user foo-user,bar-user,...
-
+```bash
 $ ./ssh-copy-key.sh -c foo-bar-sshkey -p foo-pass,bar-pass --host foo,bar --user foo-user,bar-user
 
 # output:
-/usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "~/.ssh/mykeytest.pub"
+    /usr/bin/ssh-copy-id: INFO: Source of key(s) to be installed: "~/.ssh/mykeytest.pub"
 
     Number of key(s) added:        1
 
